@@ -1,5 +1,4 @@
 import flask
-import jwt
 from firebase_admin import app_check
 from firebase_admin.auth import verify_id_token
 
@@ -36,5 +35,5 @@ def verify_app_check() -> None:
     try:
         app_check_claims = app_check.verify_token(app_check_token)
         # If verify_token() succeeds, okay to continue to route handler.
-    except (ValueError, jwt.exceptions.DecodeError):
+    except ():
         flask.abort(401)
