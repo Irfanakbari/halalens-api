@@ -16,4 +16,4 @@ app.before_request(verify_firebase_id_token)
 app.before_request(verify_app_check)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
