@@ -12,8 +12,8 @@ initialize_app()
 
 app = Flask(__name__)
 register_blueprints(app)
-app.before_request(verify_firebase_id_token)
+# app.before_request(verify_firebase_id_token)
 # app.before_request(verify_app_check)
 
 if __name__ == '__main__':
-    app.run(debug=False,host='0.0.0.0', port=8080)
+    app.run(debug=False, host='0.0.0.0', port=8080)
