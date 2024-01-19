@@ -85,3 +85,5 @@ termcolor==2.4.0
 urllib3==2.1.0
 Werkzeug==3.0.1
 wrapt==1.14.1
+
+python-dotenv~=1.0.0

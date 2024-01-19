@@ -1,12 +1,14 @@
 # app/routes/__init__.py
 from .main import main_bp
 from .predict import predict_bp
+from .search import search_bp
 
 
 # Register blueprints
 def register_blueprints(app):
     app.register_blueprint(main_bp)
     app.register_blueprint(predict_bp)
+    app.register_blueprint(search_bp)
 
 
 # def register_sockets(socket):

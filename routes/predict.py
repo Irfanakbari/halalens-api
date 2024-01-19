@@ -6,7 +6,7 @@ from tensorflow.keras.preprocessing.text import tokenizer_from_json
 from services.cloud_storage import upload_to_storage
 from services.cloud_vision import detect_text_uri
 from services.gemini_ai import extractingredient
-from services.vertex_ai import endpoint_predict_sample2, endpoint_predict_sample
+from services.vertex_ai import endpoint_predict_text
 
 predict_bp: Blueprint = Blueprint("predict", __name__)
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
@@ -78,7 +78,7 @@ def predict():
                 ingredients_json.append(ingredient_dict)
 
             # Get additional result using Vertex AI
-            result = endpoint_predict_sample(instances=x_new_padded.tolist(), project="552288219429")
+            result = endpoint_predict_text(instances=x_new_padded.tolist(), project="552288219429")
 
             return jsonify({
                 "success": "Image uploaded and processed successfully",

@@ -1,8 +1,6 @@
 import json
-import re
 
-import vertexai
-from vertexai.preview.generative_models import GenerativeModel, Part
+from vertexai.preview.generative_models import GenerativeModel
 
 
 def extractingredient(ingredient):

@@ -1,9 +1,10 @@
+import os
+
 from google.auth import credentials
 from google.cloud import storage
 
-BUCKET_NAME = 'halalens-image-bucket'
-storage_client = storage.Client(
-)
+BUCKET_NAME = os.environ.get('BUCKET_NAME')
+storage_client = storage.Client()
 # /Users/irfanakbari/Downloads/halalens-410510-3f7fe2d03cb4.json
 
 
