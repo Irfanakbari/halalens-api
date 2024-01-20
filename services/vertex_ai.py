@@ -72,7 +72,7 @@ def about_ingredient(keyword):
         f"""jelaskan 1 kalimat tentang pengetian atau fungsi bahan makanan dalam produk makanan : {keyword}""",
         generation_config={
             "max_output_tokens": 200,
-            "temperature": 0.8,
+            "temperature": 0.9,
             "top_p": 1
         },
         stream=False,
