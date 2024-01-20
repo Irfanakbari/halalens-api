@@ -60,7 +60,7 @@ def search_ingredient(keyword):
     model = model.get_tuned_model(f"projects/{os.environ.get('PROJECT')}/locations/{os.environ.get('LOCATION')}/models/"
                                   f"{os.environ.get('BISON_ENDPOINT')}")
     response = model.predict(
-        f"""Classify the following ingredient into one of the following classes: [halal, haram, syubhat] Text:{translate}"""
+        f"""Classify the following ingredient into one of the following classes: [halal, haram, syubhat] Text:{keyword}"""
         , **parameters
     )
     return response.text
