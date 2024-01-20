@@ -3,6 +3,7 @@ import os
 import numpy as np
 from google.cloud import aiplatform
 from vertexai.language_models import TextGenerationModel
+from vertexai.preview.generative_models import GenerativeModel
 
 from utils.translator import translate_to_english
 
@@ -49,7 +50,6 @@ def endpoint_predict_sample2(instances, project=os.environ.get('PROJECT'), locat
 
 def search_ingredient(keyword):
     aiplatform.init(project=os.environ.get('PROJECT'), location=os.environ.get('LOCATION'))
-    translate = translate_to_english(keyword)
     parameters = {
         "candidate_count": 1,
         "max_output_tokens": 1024,
@@ -64,3 +64,17 @@ def search_ingredient(keyword):
         , **parameters
     )
     return response.text
+
+
+def about_ingredient(keyword):
+    model = GenerativeModel("gemini-pro")
+    responses = model.generate_content(
+        f"""jelaskan 1 kalimat tentang pengetian atau fungsi bahan makanan dalam produk makanan : {keyword}""",
+        generation_config={
+            "max_output_tokens": 200,
+            "temperature": 0.8,
+            "top_p": 1
+        },
+        stream=False,
+    )
+    return responses.text
