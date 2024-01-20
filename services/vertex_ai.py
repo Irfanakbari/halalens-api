@@ -3,6 +3,7 @@ import os
 import numpy as np
 from google.cloud import aiplatform
 from vertexai.language_models import TextGenerationModel
+from vertexai.preview import generative_models
 from vertexai.preview.generative_models import GenerativeModel
 
 from utils.translator import translate_to_english
@@ -74,6 +75,14 @@ def about_ingredient(keyword):
             "max_output_tokens": 200,
             "temperature": 0.9,
             "top_p": 1
+        },
+        safety_settings={
+            generative_models.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT:
+                generative_models.HarmBlockThreshold.BLOCK_NONE,
+            generative_models.HarmCategory.HARM_CATEGORY_HARASSMENT:
+                generative_models.HarmBlockThreshold.BLOCK_NONE,
+            generative_models.HarmCategory.HARM_CATEGORY_UNSPECIFIED:
+                generative_models.HarmBlockThreshold.BLOCK_NONE
         },
         stream=False,
     )
