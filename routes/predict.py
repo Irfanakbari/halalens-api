@@ -53,7 +53,7 @@ def predict():
             extracted_entity = extractingredient(ocr_text_new)
 
             # Tokenize and pad the sequences
-            x_new_sequences = tokenizer.encode(ocr_text_new)
+            x_new_sequences = tokenizer.texts_to_sequences(ocr_text_new)
             x_new_padded = pad_sequences(x_new_sequences, maxlen=775)
 
             # Convert extracted_entity to the desired JSON format
