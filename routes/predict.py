@@ -1,4 +1,6 @@
 import json
+import pickle
+
 import flask
 from flask import Blueprint, request, jsonify
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -11,9 +13,9 @@ from services.vertex_ai import endpoint_predict_text
 predict_bp: Blueprint = Blueprint("predict", __name__)
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
-with open('tokenizer.json', 'r', encoding='utf-8') as json_file:
-    loaded_tokenizer_json = json_file.read()
-    loaded_tokenizer = tokenizer_from_json(loaded_tokenizer_json)
+with open('tokenizer.pickle', 'rb') as file:
+    # Mengambil objek tokenizer dari file menggunakan pickle
+    tokenizer = pickle.load(file)
 
 
 def allowed_file(filename):
@@ -51,7 +53,7 @@ def predict():
             extracted_entity = extractingredient(ocr_text_new)
 
             # Tokenize and pad the sequences
-            x_new_sequences = loaded_tokenizer.texts_to_sequences(ocr_text_new)
+            x_new_sequences = tokenizer.encode(ocr_text_new)
             x_new_padded = pad_sequences(x_new_sequences, maxlen=775)
 
             # Convert extracted_entity to the desired JSON format

@@ -61,7 +61,8 @@ def search_ingredient(keyword):
     model = model.get_tuned_model(f"projects/{os.environ.get('PROJECT')}/locations/{os.environ.get('LOCATION')}/models/"
                                   f"{os.environ.get('BISON_ENDPOINT')}")
     response = model.predict(
-        f"""Classify the following ingredient into one of the following classes: [halal, haram, syubhat] Text:{keyword}"""
+        f"""Classify the following ingredient into one of the following classes: [halal, haram, syubhat] Text:{keyword}
+        """
         , **parameters
     )
     return response.text
@@ -72,7 +73,7 @@ def about_ingredient(keyword):
     responses = model.generate_content(
         f"""jelaskan 1 kalimat tentang pengetian atau fungsi bahan makanan dalam produk makanan : {keyword}""",
         generation_config={
-            "max_output_tokens": 200,
+            "max_output_tokens": 300,
             "temperature": 0.9,
             "top_p": 1
         },
