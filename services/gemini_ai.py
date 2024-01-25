@@ -1,6 +1,6 @@
 import json
 
-from vertexai.language_models import TextGenerationModel
+from vertexai.preview import generative_models
 from vertexai.preview.generative_models import GenerativeModel
 
 
@@ -30,8 +30,8 @@ def infosyubhat(ingredients):
         "temperature": 0.9,
         "top_p": 1
     }
-    model = TextGenerationModel.from_pretrained("gemini-pro")
-    response = model.predict(
+    model = GenerativeModel("gemini-pro")
+    response = model.generate_content(
         f"""jelaskan secara singkat 1 kalimat tentang bahan baku makanan yang saya sebutkan, kenapa bisa syubhat, terutama pada bahan hewani
 
     input: describe this ingredients why syubhat, Text: Corn grits (domestic production), sugar, vegetable oil, margarine, sweetened condensed milk, dextrin, strawberry puree, salt, glucose, powdered vinegar/sorbitol, flavoring, acidulant, moss color, emulsifier, sweetener (sucralose), calcium carbonate, gardenia pigment, carotenoid pigment,
@@ -51,6 +51,13 @@ def infosyubhat(ingredients):
     input: describe this ingredients why syubhat, Text: {ingredients}
     output:
     """,
-        **parameters
-    )
+        generation_config=parameters,
+        safety_settings={
+            generative_models.HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT:
+                generative_models.HarmBlockThreshold.BLOCK_NONE,
+            generative_models.HarmCategory.HARM_CATEGORY_HARASSMENT:
+                generative_models.HarmBlockThreshold.BLOCK_NONE,
+            generative_models.HarmCategory.HARM_CATEGORY_UNSPECIFIED:
+                generative_models.HarmBlockThreshold.BLOCK_NONE
+        }, )
     return response.text
