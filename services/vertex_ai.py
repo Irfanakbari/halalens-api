@@ -6,8 +6,6 @@ from vertexai.language_models import TextGenerationModel
 from vertexai.preview import generative_models
 from vertexai.preview.generative_models import GenerativeModel
 
-from utils.translator import translate_to_english
-
 
 def endpoint_predict_text(instances, project=os.environ.get('PROJECT'), location=os.environ.get('LOCATION'),
                           endpoint_id=os.environ.get('LSTM_ENDPOINT')):

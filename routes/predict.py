@@ -7,7 +7,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.preprocessing.text import tokenizer_from_json
 from services.cloud_storage import upload_to_storage
 from services.cloud_vision import detect_text_uri
-from services.gemini_ai import extractingredient
+from services.gemini_ai import extractingredient, infosyubhat
 from services.vertex_ai import endpoint_predict_text
 
 predict_bp: Blueprint = Blueprint("predict", __name__)
@@ -81,11 +81,14 @@ def predict():
 
             # Get additional result using Vertex AI
             result = endpoint_predict_text(instances=x_new_padded.tolist(), project="552288219429")
-
+            info = ''
+            if result == 'syubhat':
+                info = infosyubhat(ocr_text)
             return jsonify({
                 "success": "Image uploaded and processed successfully",
                 "ocr_text": formatted_string,
                 "ingredients": ingredients_json,
+                "info": info,
                 "result": result
             }), 200
 
