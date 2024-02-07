@@ -15,7 +15,7 @@ def endpoint_predict_text(instances, project=os.environ.get('PROJECT'), location
 
     # Extract output probabilities
     output_probabilities = prediction[0]
-    label_mapping = {0: 'halal', 1: 'haram', 2: 'syubhat'}
+    label_mapping = {0: 'halal', 1: 'haram'}
 
     # Get predicted labels
     predicted_labels = [np.argmax(probabilities) for probabilities in output_probabilities]
