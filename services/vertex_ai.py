@@ -43,7 +43,7 @@ def endpoint_predict_text2(text, project=os.environ.get('PROJECT_ID'), location=
         **parameters
     )
     # Return the list of predicted categories
-    return response.text
+    return response.text.strip()
 
 
 def search_ingredient(keyword):
