@@ -1,21 +1,19 @@
-import pickle
 import time
 
 import flask
 from flask import Blueprint, request, jsonify
-from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 from services.cloud_storage import upload_to_storage
 from services.cloud_vision import detect_text_uri
-from services.gemini_ai import extractingredient, infosyubhat
-from services.vertex_ai import endpoint_predict_text, endpoint_predict_text2
+from services.gemini_ai import infosyubhat
+from services.vertex_ai import endpoint_predict_text2
 
 predict_bp: Blueprint = Blueprint("predict", __name__)
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
-with open('tokenizer.pickle', 'rb') as file:
-    # Mengambil objek tokenizer dari file menggunakan pickle
-    tokenizer = pickle.load(file)
+# with open('tokenizer.pickle', 'rb') as file:
+#     # Mengambil objek tokenizer dari file menggunakan pickle
+#     tokenizer = pickle.load(file)
 
 
 def allowed_file(filename):

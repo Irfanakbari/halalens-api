@@ -1,6 +1,5 @@
 import os
 
-from google.auth import credentials
 from google.cloud import storage
 
 BUCKET_NAME = os.environ.get('BUCKET_NAME')
