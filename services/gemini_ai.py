@@ -26,27 +26,27 @@ def extractingredient(ingredient):
 
 def infosyubhat(ingredients):
     parameters = {
-        "max_output_tokens": 138,
+        "max_output_tokens": 150,
         "temperature": 0.9,
         "top_p": 1
     }
     model = GenerativeModel("gemini-pro")
     response = model.generate_content(
-        f"""jelaskan secara singkat 1 kalimat tentang bahan baku makanan yang saya sebutkan, kenapa bisa syubhat, terutama pada bahan hewani
+        f"""jelaskan secara singkat 1 kalimat tentang bahan baku makanan yang saya sebutkan, kenapa bisa haram, terutama pada bahan hewani
 
     input: describe this ingredients why syubhat, Text: Corn grits (domestic production), sugar, vegetable oil, margarine, sweetened condensed milk, dextrin, strawberry puree, salt, glucose, powdered vinegar/sorbitol, flavoring, acidulant, moss color, emulsifier, sweetener (sucralose), calcium carbonate, gardenia pigment, carotenoid pigment,
     (Contains milk ingredients and soybeans in part)
-    output: Margarin bisa mengandung bahan non halal
+    output: Margarin dapat mengandung bahan non halal
 
     input: describe this ingredients why syubhat, Text: sweetened condensed milk, dextrin, strawberry puree, salt, enzyme, powdered vinegar/sorbitol, flavoring, acidulant, moss color, emulsifier, sweetener (sucralose), calcium carbonate, gardenia pigment, carotenoid pigment,
-    output: Enzyme mungkin bisa berbahan hewani non halal atau nabati
+    output: Enzyme dapat berbahan hewani non halal
 
     input: describe this ingredients why syubhat, Text: enzyme, gelatin
-    output: Enzyme bisa berbahan hewani hewani non halal atau nabati
-    Gelatin bisa berasal dari hewan non halal
+    output: Enzyme dapat berbahan hewani non halal
+    Gelatin dapat dari hewan non halal
 
     input: describe this ingredients why syubhat, Text:milk chocolate sugar chocolate liquor cocoa butter milk soya lecithin emulsifier pure vanilla ginger green tea,
-    output: Emulsifier bisa berbahan nabati atau hewani non halal
+    output: Emulsifier dapat berbahan hewani non halal
 
     input: describe this ingredients why syubhat, Text: {ingredients}
     output:
@@ -59,5 +59,5 @@ def infosyubhat(ingredients):
                 generative_models.HarmBlockThreshold.BLOCK_NONE,
             generative_models.HarmCategory.HARM_CATEGORY_UNSPECIFIED:
                 generative_models.HarmBlockThreshold.BLOCK_NONE
-        }, )
+        },)
     return response.text

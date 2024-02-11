@@ -1,6 +1,7 @@
 import os
 
 import numpy as np
+import vertexai
 from google.cloud import aiplatform
 from vertexai.language_models import TextGenerationModel
 from vertexai.preview import generative_models
@@ -9,7 +10,7 @@ from vertexai.preview.generative_models import GenerativeModel
 
 def endpoint_predict_text(instances, project=os.environ.get('PROJECT'), location=os.environ.get('LOCATION'),
                           endpoint_id=os.environ.get('LSTM_ENDPOINT')):
-    aiplatform.init(project=project, location=location)
+    aiplatform.init(project=project)
     endpoint = aiplatform.Endpoint(f"projects/{project}/locations/{location}/endpoints/{endpoint_id}")
     prediction = endpoint.predict(instances=instances)
 
@@ -25,26 +26,24 @@ def endpoint_predict_text(instances, project=os.environ.get('PROJECT'), location
     return predicted_categories[0]
 
 
-def endpoint_predict_sample2(instances, project=os.environ.get('PROJECT'), location=os.environ.get('LOCATION'),
-                             endpoint_id=os.environ.get('LSTM_ENDPOINT')):
-    aiplatform.init(project=project, location=location)
-    endpoint = aiplatform.Endpoint(f"projects/{project}/locations/{location}/endpoints/{endpoint_id}")
-    predictions = endpoint.predict(instances=instances)
-
-    label_mapping = {0: 'halal', 1: 'haram', 2: 'syubhat'}
-    # Extract output probabilities
-    predicted_categories = []
-
-    for prediction in predictions[0]:
-        # Get the index of the category with the highest probability
-        predicted_label_index = np.argmax(prediction)
-        # Convert the category index to the corresponding label according to the mapping
-        predicted_category = label_mapping[predicted_label_index]
-        # Add the predicted label to the list predicted_categories
-        predicted_categories.append(predicted_category)
-
+def endpoint_predict_text2(text, project=os.environ.get('PROJECT_ID'), location=os.environ.get('LOCATION'),
+                           endpoint_id=os.environ.get('BISON_ENDPOINT')):
+    vertexai.init(project=project, location=location)
+    parameters = {
+        "candidate_count": 1,
+        "max_output_tokens": 512,
+        "temperature": 0.9,
+        "top_p": 1
+    }
+    model = TextGenerationModel.from_pretrained("text-bison@002")
+    model = model.get_tuned_model(f"projects/{project}/locations/{location}/models/{endpoint_id}")
+    response = model.predict(
+        f"""Classify the following ingredient into one of the following classes: [halal, haram] Text: {text}. (if 
+        from animal [haram], from plant [halal], unknown source [haram])""",
+        **parameters
+    )
     # Return the list of predicted categories
-    return predicted_categories
+    return response.text
 
 
 def search_ingredient(keyword):

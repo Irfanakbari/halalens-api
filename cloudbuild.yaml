@@ -2,13 +2,13 @@ steps:
   - name: "gcr.io/cloud-builders/docker"
     args:
           ["build", "-t",
-          "asia-southeast2-docker.pkg.dev/$PROJECT_ID/halalens-api/halalens-api",
+          "us-central1-docker.pkg.dev/$PROJECT_ID/halalens-api/halalens-api",
           "."]
 
   - name: "gcr.io/cloud-builders/docker"
     args:
           ["push",
-          "asia-southeast2-docker.pkg.dev/$PROJECT_ID/halalens-api/halalens-api"]
+          "us-central1-docker.pkg.dev/$PROJECT_ID/halalens-api/halalens-api"]
 
   - name: "gcr.io/cloud-builders/gcloud"
     args:
@@ -17,9 +17,9 @@ steps:
         "deploy",
         "halalens-api",
         "--image",
-        "asia-southeast2-docker.pkg.dev/$PROJECT_ID/halalens-api/halalens-api",
+        "us-central1-docker.pkg.dev/$PROJECT_ID/halalens-api/halalens-api",
         "--region",
-        "asia-southeast2",
+        "us-central1",
         "--platform",
         "managed",
         "--port",

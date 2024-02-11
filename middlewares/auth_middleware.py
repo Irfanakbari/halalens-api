@@ -19,15 +19,19 @@ def verify_firebase_id_token() -> None:
     if not authorization_header or not authorization_header.startswith('Bearer '):
         flask.abort(401)
     id_token = authorization_header.split(' ')[1]
-    if not authorization_header:
-        flask.abort(401)
-    # Verify the Firebase ID token
-    decoded_token = verify_firebase_token(id_token)
-    if not decoded_token:
-        flask.abort(401)
 
-    # Add the decoded token to the request context for later use if needed
-    flask.g.decoded_token = decoded_token
+    try:
+        # Verify the Firebase ID token
+        decoded_token = verify_firebase_token(id_token)
+        if not decoded_token:
+            flask.abort(401)
+
+        # Add the decoded token to the request context for later use if needed
+        flask.g.decoded_token = decoded_token
+
+    except ValueError as e:
+        print(f"Token verification failed: {e}")
+        flask.abort(500)
 
 
 def verify_app_check() -> None:
