@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 
-from services.vertex_ai import search_ingredient, about_ingredient
+from services.vertex_ai import about_ingredient, endpoint_predict_text2
 from utils.translator import translate_to_english
 
 search_bp: Blueprint = Blueprint("search", __name__)
@@ -16,7 +16,7 @@ def predict():
             return jsonify({"error": "Search keyword is missing in the request"}), 400
 
         translate = translate_to_english(search_keyword)
-        result = search_ingredient(translate)
+        result = endpoint_predict_text2(translate)
         about = about_ingredient(translate)
         return jsonify({
             "success": "Search successful",
