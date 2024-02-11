@@ -32,23 +32,23 @@ def infosyubhat(ingredients):
     }
     model = GenerativeModel("gemini-pro")
     response = model.generate_content(
-        f"""jelaskan secara singkat 1 kalimat tentang bahan baku makanan yang saya sebutkan, kenapa bisa haram, terutama pada bahan hewani
+        f"""describe this ingredients why haram, only 1 sentences
 
-    input: describe this ingredients why syubhat, Text: Corn grits (domestic production), sugar, vegetable oil, margarine, sweetened condensed milk, dextrin, strawberry puree, salt, glucose, powdered vinegar/sorbitol, flavoring, acidulant, moss color, emulsifier, sweetener (sucralose), calcium carbonate, gardenia pigment, carotenoid pigment,
+    input: describe this ingredients why haram, Text: Corn grits (domestic production), sugar, vegetable oil, margarine, sweetened condensed milk, dextrin, strawberry puree, salt, glucose, powdered vinegar/sorbitol, flavoring, acidulant, moss color, emulsifier, sweetener (sucralose), calcium carbonate, gardenia pigment, carotenoid pigment,
     (Contains milk ingredients and soybeans in part)
     output: Margarin dapat mengandung bahan non halal
 
-    input: describe this ingredients why syubhat, Text: sweetened condensed milk, dextrin, strawberry puree, salt, enzyme, powdered vinegar/sorbitol, flavoring, acidulant, moss color, emulsifier, sweetener (sucralose), calcium carbonate, gardenia pigment, carotenoid pigment,
+    input: describe this ingredients why haram, Text: sweetened condensed milk, dextrin, strawberry puree, salt, enzyme, powdered vinegar/sorbitol, flavoring, acidulant, moss color, emulsifier, sweetener (sucralose), calcium carbonate, gardenia pigment, carotenoid pigment,
     output: Enzyme dapat berbahan hewani non halal
 
-    input: describe this ingredients why syubhat, Text: enzyme, gelatin
+    input: describe this ingredients why haram, Text: enzyme, gelatin
     output: Enzyme dapat berbahan hewani non halal
     Gelatin dapat dari hewan non halal
 
-    input: describe this ingredients why syubhat, Text:milk chocolate sugar chocolate liquor cocoa butter milk soya lecithin emulsifier pure vanilla ginger green tea,
+    input: describe this ingredients why haram, Text:milk chocolate sugar chocolate liquor cocoa butter milk soya lecithin emulsifier pure vanilla ginger green tea,
     output: Emulsifier dapat berbahan hewani non halal
 
-    input: describe this ingredients why syubhat, Text: {ingredients}
+    input: describe this ingredients why haram, Text: {ingredients}
     output:
     """,
         generation_config=parameters,
