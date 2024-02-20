@@ -18,9 +18,11 @@ def upload_to_storage(file, uid):
     blob = bucket.blob(destination_blob_name)
 
     # Upload the file to the bucket
-    blob.upload_from_file(file)
+    res = blob.upload_from_file(file)
 
     # Generate the URI for the uploaded file
     uri = f"gs://{BUCKET_NAME}/{destination_blob_name}"
 
-    return uri
+    return {
+        "uri": uri, "link": f"https://storage.googleapis.com/halalens-user-image/{uid}/{file.filename}"
+    }

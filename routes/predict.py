@@ -51,7 +51,7 @@ def predict():
 
             # Perform OCR on the uploaded image using Google Cloud Vision API
             ocr_start_time = time.time()  # Record OCR start time
-            ocr_text = detect_text_uri(uri)
+            ocr_text = detect_text_uri(uri["uri"])
             ocr_time = time.time() - ocr_start_time  # Calculate OCR time
 
             # ocr_text_new = [ocr_text]
@@ -105,6 +105,7 @@ def predict():
                 # "ingredients": ingredients_json,
                 "info": info,
                 "result": result,
+                "image": uri["link"],
                 "timings": {
                     "upload_time": upload_time,
                     "ocr_time": ocr_time,
