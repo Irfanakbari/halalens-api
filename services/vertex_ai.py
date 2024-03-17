@@ -26,45 +26,6 @@ def endpoint_predict_text(instances, project=os.environ.get('PROJECT'), location
     return predicted_categories[0]
 
 
-def endpoint_predict_text2(text, project=os.environ.get('PROJECT_ID'), location=os.environ.get('LOCATION'),
-                           endpoint_id=os.environ.get('BISON_ENDPOINT')):
-    vertexai.init(project=project, location=location)
-    parameters = {
-        "candidate_count": 1,
-        "max_output_tokens": 512,
-        "temperature": 0.9,
-        "top_p": 1
-    }
-    model = TextGenerationModel.from_pretrained("text-bison@002")
-    model = model.get_tuned_model(f"projects/{project}/locations/{location}/models/{endpoint_id}")
-    response = model.predict(
-        f"""Classify the following ingredient into one of the following classes: [halal, haram] Text: {text}. (if 
-        from animal [haram], from plant [halal], unknown source [haram])""",
-        **parameters
-    )
-    # Return the list of predicted categories
-    return response.text.strip()
-
-
-def search_ingredient(keyword):
-    aiplatform.init(project=os.environ.get('PROJECT'), location=os.environ.get('LOCATION'))
-    parameters = {
-        "candidate_count": 1,
-        "max_output_tokens": 1024,
-        "temperature": 0.9,
-        "top_p": 1
-    }
-    model = TextGenerationModel.from_pretrained("text-bison@002")
-    model = model.get_tuned_model(f"projects/{os.environ.get('PROJECT')}/locations/{os.environ.get('LOCATION')}/models/"
-                                  f"{os.environ.get('BISON_ENDPOINT')}")
-    response = model.predict(
-        f"""Classify the following ingredient into one of the following classes: [halal, haram, syubhat] Text:{keyword}
-        """
-        , **parameters
-    )
-    return response.text
-
-
 def about_ingredient(keyword):
     model = GenerativeModel("gemini-pro")
     responses = model.generate_content(

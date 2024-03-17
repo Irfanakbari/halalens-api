@@ -2,7 +2,7 @@ import os
 
 from google.cloud import storage
 
-BUCKET_NAME = os.environ.get('BUCKET_NAME')
+BUCKET_NAME = "halalens-user-image"
 storage_client = storage.Client()
 # /Users/irfanakbari/Downloads/halalens-410510-3f7fe2d03cb4.json
 

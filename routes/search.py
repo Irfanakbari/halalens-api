@@ -1,9 +1,15 @@
-from flask import Blueprint, jsonify, request
+import pickle
 
-from services.vertex_ai import about_ingredient, endpoint_predict_text2
+from flask import Blueprint, jsonify, request
+from keras.src.utils import pad_sequences
+
+from services.vertex_ai import about_ingredient, endpoint_predict_text2, endpoint_predict_text
 from utils.translator import translate_to_english
 
 search_bp: Blueprint = Blueprint("search", __name__)
+with open('tokenizer2.pickle', 'rb') as file:
+    # Mengambil objek tokenizer dari file menggunakan pickle
+    tokenizer = pickle.load(file)
 
 
 @search_bp.route('/search', methods=['POST'])
@@ -16,7 +22,9 @@ def predict():
             return jsonify({"error": "Search keyword is missing in the request"}), 400
 
         translate = translate_to_english(search_keyword)
-        result = endpoint_predict_text2(translate)
+        x_new_sequences = tokenizer.texts_to_sequences([translate])
+        x_new_padded = pad_sequences(x_new_sequences, maxlen=775)
+        result = endpoint_predict_text(x_new_padded.tolist())
         about = about_ingredient(translate)
         return jsonify({
             "success": "Search successful",

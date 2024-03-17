@@ -34,12 +34,15 @@ def infosyubhat(ingredients):
     response = model.generate_content(
         f"""describe this ingredients why haram, only 1 sentences
 
-    input: describe this ingredients why haram, Text: Corn grits (domestic production), sugar, vegetable oil, margarine, sweetened condensed milk, dextrin, strawberry puree, salt, glucose, powdered vinegar/sorbitol, flavoring, acidulant, moss color, emulsifier, sweetener (sucralose), calcium carbonate, gardenia pigment, carotenoid pigment,
-    (Contains milk ingredients and soybeans in part)
-    output: Margarin dapat mengandung bahan non halal
+    input: describe this ingredients why haram, Text: Corn grits (domestic production), sugar, vegetable oil, 
+    margarine, sweetened condensed milk, dextrin, strawberry puree, salt, glucose, powdered vinegar/sorbitol, 
+    flavoring, acidulant, moss color, emulsifier, sweetener (sucralose), calcium carbonate, gardenia pigment, 
+    carotenoid pigment, (Contains milk ingredients and soybeans in part) output: Margarin dapat mengandung bahan non 
+    halal
 
-    input: describe this ingredients why haram, Text: sweetened condensed milk, dextrin, strawberry puree, salt, enzyme, powdered vinegar/sorbitol, flavoring, acidulant, moss color, emulsifier, sweetener (sucralose), calcium carbonate, gardenia pigment, carotenoid pigment,
-    output: Enzyme dapat berbahan hewani non halal
+    input: describe this ingredients why haram, Text: sweetened condensed milk, dextrin, strawberry puree, salt, 
+    enzyme, powdered vinegar/sorbitol, flavoring, acidulant, moss color, emulsifier, sweetener (sucralose), 
+    calcium carbonate, gardenia pigment, carotenoid pigment, output: Enzyme dapat berbahan hewani non halal
 
     input: describe this ingredients why haram, Text: enzyme, gelatin
     output: Enzyme dapat berbahan hewani non halal

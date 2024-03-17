@@ -1,19 +1,21 @@
+import pickle
 import time
 
 import flask
 from flask import Blueprint, request, jsonify
+from keras.src.utils import pad_sequences
 
 from services.cloud_storage import upload_to_storage
 from services.cloud_vision import detect_text_uri
 from services.gemini_ai import infosyubhat
-from services.vertex_ai import endpoint_predict_text2
+from services.vertex_ai import endpoint_predict_text2, endpoint_predict_text
 
 predict_bp: Blueprint = Blueprint("predict", __name__)
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
-# with open('tokenizer.pickle', 'rb') as file:
-#     # Mengambil objek tokenizer dari file menggunakan pickle
-#     tokenizer = pickle.load(file)
+with open('tokenizer2.pickle', 'rb') as file:
+    # Mengambil objek tokenizer dari file menggunakan pickle
+    tokenizer = pickle.load(file)
 
 
 def allowed_file(filename):
@@ -54,43 +56,14 @@ def predict():
             ocr_text = detect_text_uri(uri["uri"])
             ocr_time = time.time() - ocr_start_time  # Calculate OCR time
 
-            # ocr_text_new = [ocr_text]
-            # Process the OCR text
-            # extraction_start_time = time.time()  # Record extraction start time
-            # extracted_entity = extractingredient(ocr_text)
-            # extraction_time = time.time() - extraction_start_time  # Calculate extraction time
-
             # Convert extracted_entity to the desired JSON format
-            ingredients_json = []
-            # predict_list_ingredients = []
 
-            # for entity in extracted_entity["ingredients"]:
-            #     x_new_sequences2 = loaded_tokenizer.texts_to_sequences([entity["name"]])
-            #     x_new_padded2 = pad_sequences(x_new_sequences2, maxlen=775)
-            #     predict_list_ingredients.append(x_new_padded2[0].tolist())
-
-            # Get predictions using Vertex AI predicted_list_ingredients = endpoint_predict_sample2(
-            # instances=predict_list_ingredients, project="552288219429")
-
-            # formatted_string = ""
-            # for index, entity in enumerate(extracted_entity["ingredients"]):
-            #     ingredient_dict = {"name": entity["name"]}
-            #     if 'percentage' in entity:
-            #         ingredient_dict['percentage'] = entity['percentage']
-            #     if 'contains' in entity:
-            #         ingredient_dict['contains'] = entity['contains']
-            #     # ingredient_dict['status'] = predicted_list_ingredients[index]
-            #     formatted_string += f"{entity['name']}, "
-            #     ingredients_json.append(ingredient_dict)
-
-            # Get additional result using Vertex AI
-            # Tokenize and pad the sequences
-            # x_new_sequences = tokenizer.texts_to_sequences([formatted_string])
-            # x_new_padded = pad_sequences(x_new_sequences, maxlen=423)
+            x_new_sequences = tokenizer.texts_to_sequences([ocr_text])
+            x_new_padded = pad_sequences(x_new_sequences, maxlen=775)
 
             # Get additional result using Vertex AI
             result_start_time = time.time()  # Record result prediction start time
-            result = endpoint_predict_text2(ocr_text)
+            result = endpoint_predict_text(x_new_padded.tolist())
             result_time = time.time() - result_start_time  # Calculate result prediction time
 
             info = ''
